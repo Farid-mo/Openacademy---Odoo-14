@@ -1,0 +1,30 @@
+<odoo>
+    <data>
+
+          <record id="course0" model="academy.courses">
+            <field name="name">Course 1</field>
+            <field name="description">Description of our course</field>
+          </record>
+
+          <record id="course1" model="academy.courses">
+            <field name="name">Course 2</field>
+            <field name="description">Description 2 of our course</field>
+          </record>
+
+          <record id="course2" model="academy.courses">
+            <field name="name">Course 3</field>
+            <field name="description">Description of our course</field>
+          </record>
+<!--
+          <record id="object3" model="openacademy.openacademy">
+            <field name="name">Object 3</field>
+            <field name="value">30</field>
+          </record>
+
+          <record id="object4" model="openacademy.openacademy">
+            <field name="name">Object 4</field>
+            <field name="value">40</field>
+          </record>
+-->
+    </data>
+</odoo>

@@ -1,0 +1,108 @@
+<odoo>
+  <data>
+
+    <record model="ir.ui.view" id="academy_session_form_view">
+      <field name="name">academy_session_form</field>
+      <field name="model">academy.session</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group string="General">
+                <field name="course_id"/>
+                <field name="name"/>
+                <field name="instructor_id"/>
+                <field name="active"/>
+            </group>
+            <group string="Schedule">
+                <field name="start_date"/>
+                <field name="duration"/>
+                <field name="seats"/>
+                <field name="taken_seats" widget="progressbar"/>
+            </group>
+            <br/><br/>
+            <label for="attendee_ids"/>
+            <br/><br/>
+            <field name="attendee_ids"/>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="academy_session_list">
+      <field name="name">academy_session_list</field>
+      <field name="model">academy.session</field>
+      <field name="arch" type="xml">
+        <tree string="Session Tree list" decoration-info="duration&lt;5" decoration-danger="duration&gt;15">
+          <field name="name"/>
+          <field name="course_id"/>
+          <field name="taken_seats" widget="progressbar"/>
+          <field name="duration" invisible="1"/>
+<!--          <field name="seats"/>-->
+        </tree>
+      </field>
+    </record>
+
+  <!-- fix it later -->
+<!--    <record model="ir.ui.view" id="academy_session_search_view">-->
+<!--      <field name="name">academy_session_search</field>-->
+<!--      <field name="model">academy.session</field>-->
+<!--      <field name="arch" type="xml">-->
+<!--          <search>-->
+<!--              <field name="name"/>-->
+<!--          </search>-->
+<!--      </field>-->
+<!--    </record>-->
+
+
+    <!-- calendar view -->
+        <record model="ir.ui.view" id="session_calendar_view">
+            <field name="name">session.calendar</field>
+            <field name="model">academy.session</field>
+            <field name="arch" type="xml">
+                <calendar string="Session Calendar" date_start="start_date" date_stop="end_date" color="instructor_id">
+                    <field name="name"/>
+                </calendar>
+            </field>
+        </record>
+
+
+    <!-- Gantt -->
+    <record model="ir.ui.view" id="session_gantt_view">
+            <field name="name">session.gantt</field>
+            <field name="model">academy.session</field>
+            <field name="arch" type="xml">
+                <gantt string="Session Gantt"
+                       date_start="start_date" date_stop="end_date"
+                       default_group_by='instructor_id'>
+                </gantt>
+            </field>
+        </record>
+
+    <!-- Graph -->
+    <record model="ir.ui.view" id="academy_session_graph_view">
+            <field name="name">academy.session.graph</field>
+            <field name="model">academy.session</field>
+            <field name="arch" type="xml">
+                <graph string="Participations by Courses">
+                    <field name="course_id"/>
+                    <field name="attendees_count" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="academy_session_action_window">
+      <field name="name">Academy Session</field>
+      <field name="res_model">academy.session</field>
+      <field name="view_mode">tree,form,calendar,gantt,graph</field>
+      <field name="help" type="html">
+        <p class="o_view_no_content_smiling_face"> Create the first session </p>
+      </field>
+    </record>
+
+
+  </data>
+</odoo>

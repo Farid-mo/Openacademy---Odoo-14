@@ -1,0 +1,19 @@
+<odoo>
+  <data>
+
+                        <!-- Menu -->
+
+    <menuitem name="Open academy" id="main_academy_menu"/>
+
+    <menuitem id="academy_menu0" name="Academy"
+                  parent="main_academy_menu"/>
+
+
+    <menuitem name="Courses" id="course_menu" parent="academy_menu0"
+                action="academy_course_action_window"/>
+    <menuitem name="Sessions" id="session_menu" parent="academy_menu0"
+                action="academy_session_action_window"/>
+
+
+  </data>
+</odoo>
