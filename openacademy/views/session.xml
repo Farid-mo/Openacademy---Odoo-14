@@ -37,6 +37,7 @@
         <tree string="Session Tree list" decoration-info="duration&lt;5" decoration-danger="duration&gt;15">
           <field name="name"/>
           <field name="course_id"/>
+          <field name="remaining_seats" readonly="1"/>
           <field name="taken_seats" widget="progressbar"/>
           <field name="duration" invisible="1"/>
 <!--          <field name="seats"/>-->
@@ -68,7 +69,7 @@
         </record>
 
 
-    <!-- Gantt -->
+    <!-- Gantt view -->
     <record model="ir.ui.view" id="session_gantt_view">
             <field name="name">session.gantt</field>
             <field name="model">academy.session</field>
@@ -80,7 +81,7 @@
             </field>
         </record>
 
-    <!-- Graph -->
+    <!-- Graph view -->
     <record model="ir.ui.view" id="academy_session_graph_view">
             <field name="name">academy.session.graph</field>
             <field name="model">academy.session</field>
@@ -93,11 +94,60 @@
         </record>
 
 
+    <!-- Kanban view -->
+
+    <record model="ir.ui.view" id="view_openacad_session_kanban">
+            <field name="name">academy.session.kanban</field>
+            <field name="model">academy.session</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="course_id">
+                    <field name="color"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div
+                                    t-attf-class="oe_kanban_color_{{kanban_getcolor(record.color.raw_value)}}
+                                                  oe_kanban_global_click_edit oe_semantic_html_override
+                                                  oe_kanban_card {{record.group_fancy==1 ? 'oe_kanban_card_fancy' : ''}}">
+                                <div class="oe_dropdown_kanban">
+                                    <!-- dropdown menu -->
+                                    <div class="oe_dropdown_toggle">
+                                        <i class="fa fa-bars fa-lg" title="Manage" aria-label="Manage"/>
+                                        <ul class="oe_dropdown_menu">
+                                            <li>
+                                                <a type="delete">Delete</a>
+                                            </li>
+                                            <li>
+                                                <ul class="oe_kanban_colorpicker"
+                                                    data-field="color"/>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="oe_clear"></div>
+                                </div>
+                                <div t-attf-class="oe_kanban_content">
+                                    <!-- title -->
+                                    Session name:
+                                    <field name="name"/>
+                                    <br/>
+                                    Start date:
+                                    <field name="start_date"/>
+                                    <br/>
+                                    duration:
+                                    <field name="duration"/>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+
     <!-- actions opening views on models -->
     <record model="ir.actions.act_window" id="academy_session_action_window">
       <field name="name">Academy Session</field>
       <field name="res_model">academy.session</field>
-      <field name="view_mode">tree,form,calendar,gantt,graph</field>
+      <field name="view_mode">tree,form,calendar,gantt,graph,kanban</field>
       <field name="help" type="html">
         <p class="o_view_no_content_smiling_face"> Create the first session </p>
       </field>

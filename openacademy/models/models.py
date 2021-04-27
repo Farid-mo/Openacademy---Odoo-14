@@ -28,6 +28,8 @@ class AcademyCourses(models.Model):
     description = fields.Text()
     responsible_id = fields.Many2one('res.users', ondelete='set null', string='Responsible', index=True)
     session_ids = fields.One2many('academy.session', 'course_id', string='Sessions')
+    color = fields.Integer()
+
     _sql_constraints = [
         ('name_description_check',
          'CHECK(name != description)',
@@ -60,16 +62,19 @@ class Session(models.Model):
     start_date = fields.Date(default=fields.Date.today)
     duration = fields.Float(digits=(6, 2), help='Duration in days')
     seats = fields.Integer(string='Number of seats')
-    instructor_id = fields.Many2one('res.partner', string='Instructor', domain=['|', ('instructor', '=', True)])
+    instructor_id = fields.Many2one('res.partner', string='Instructor')
+                                    # domain=['|', ('instructor', '=', True)])
     course_id = fields.Many2one('academy.courses', ondelete='cascade',
                                 string='Course', required=True)
     attendee_ids = fields.Many2many('res.partner', string='Attendees')
     taken_seats = fields.Float(string="Taken seats", compute='_taken_seats')
+    remaining_seats = fields.Integer(string='Remaining Places', compute='_seats_taken')
     active = fields.Boolean(default=True)
     end_date = fields.Date(string="End Date", store=True,
                            compute='_get_end_date', inverse='_set_end_date')
     attendees_count = fields.Integer(string="Attendees count", store=True,
                                      compute='_get_attendees_count')
+    color = fields.Integer()
 
     @api.depends('attendee_ids')
     def _get_attendees_count(self):
@@ -96,6 +101,14 @@ class Session(models.Model):
             # Compute the difference between dates, but: Friday - Monday = 4 days,
             # so add one day to get 5 days instead
             r.duration = (r.end_date - r.start_date).days + 1
+
+    @api.depends('seats', 'attendee_ids')
+    def _seats_taken(self):
+        for record in self:
+            if not record.seats:
+                record.remaining_seats = 0
+            else:
+                record.remaining_seats = record.seats - len(record.attendee_ids)
 
     @api.depends('seats', 'attendee_ids')
     def _taken_seats(self):
