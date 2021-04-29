@@ -96,7 +96,7 @@
 
     <!-- Kanban view -->
 
-    <record model="ir.ui.view" id="view_openacad_session_kanban">
+    <record model="ir.ui.view" id="view_academy_session_kanban">
             <field name="name">academy.session.kanban</field>
             <field name="model">academy.session</field>
             <field name="arch" type="xml">

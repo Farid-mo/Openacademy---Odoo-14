@@ -1,0 +1,1 @@
+from . import registration_attendees_to_sessions_wiz
