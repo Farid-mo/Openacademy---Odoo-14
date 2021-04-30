@@ -1,4 +1,4 @@
-from odoo import models,  fields
+from odoo import models, fields
 
 
 class Wizard(models.TransientModel):
@@ -10,7 +10,7 @@ class Wizard(models.TransientModel):
                                                                                           'attendee_ids': self.attendee_ids})
 
     session_ids = fields.Many2one('academy.session', string='Session', required=True)
-                                  # required=True, default=_default_session)
+    # default=_default_session)
     attendee_ids = fields.Many2one('res.partner', string='Attendees')
 
     # def subscribe(self):
