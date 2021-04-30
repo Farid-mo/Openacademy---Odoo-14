@@ -21,7 +21,7 @@
     'sequence': -100,
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base', 'board'],
 
     # always loaded
     'data': [
@@ -30,6 +30,7 @@
         'views/templates.xml',
         'wizard/registration_attendees_to_sessions_wiz.xml',
         'views/main_menu.xml',
+        'views/session_board.xml',
         'views/courses.xml',
         'views/session.xml',
 

@@ -24,8 +24,6 @@
         <field name="name">Add Attendees</field>
         <field name="res_model">academy.wizard.create.attendees</field>
         <field name="view_mode">form</field>
-<!--        <field name="target">new</field>-->
-<!--        <field name="binding_model_id" ref="wizard_form_view"/>-->
         <field name="view_id" ref="openacademy.wizard_form_view"/>
         <field name="target">new</field>
         <field name="binding_model_id" ref="model_academy_session"/>
