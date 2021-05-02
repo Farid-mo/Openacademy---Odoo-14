@@ -3,7 +3,8 @@
 
                         <!-- Menu -->
 
-    <menuitem name="Open academy" id="main_academy_menu"/>
+    <menuitem name="Open academy" id="main_academy_menu"
+              web_icon="openacademy,static/description/enterprise.png"/>
 
     <menuitem id="academy_menu0" name="Academy" sequence="1"
                   parent="main_academy_menu"/>

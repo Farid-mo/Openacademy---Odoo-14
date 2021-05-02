@@ -23,6 +23,7 @@ from datetime import timedelta
 class AcademyCourses(models.Model):
     _name = 'academy.courses'
     _description = 'All courses of our Academy'
+    _rec_name = 'name'
 
     name = fields.Char(string='Title', required=True)
     description = fields.Text()
@@ -57,6 +58,7 @@ class AcademyCourses(models.Model):
 class Session(models.Model):
     _name = 'academy.session'
     _description = 'Academy Sessions'
+    _rec_name = 'name'
 
     name = fields.Char(string='Name', required=True)
     start_date = fields.Date(default=fields.Date.today)
@@ -65,7 +67,7 @@ class Session(models.Model):
     instructor_id = fields.Many2one('res.partner', string='Instructor')
                                     # domain=['|', ('instructor', '=', True)])
     course_id = fields.Many2one('academy.courses', ondelete='cascade',
-                                string='Course', required=True)
+                                string='Course')
     attendee_ids = fields.Many2many('res.partner', string='Attendees')
     taken_seats = fields.Float(string="Taken seats", compute='_taken_seats')
     remaining_seats = fields.Integer(string='Remaining Places', compute='_seats_taken')

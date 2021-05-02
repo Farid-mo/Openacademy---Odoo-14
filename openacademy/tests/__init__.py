@@ -1,1 +1,1 @@
-from . import test_courses
+from . import test_courses, test_session
