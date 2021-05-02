@@ -75,11 +75,17 @@ class Session(models.Model):
     attendees_count = fields.Integer(string="Attendees count", store=True,
                                      compute='_get_attendees_count')
     color = fields.Integer()
+    duration_change_type = fields.Integer(string='Duration hours', help='Duration', compute='_get_duration_type')
 
     @api.depends('attendee_ids')
     def _get_attendees_count(self):
         for r in self:
             r.attendees_count = len(r.attendee_ids)
+
+    @api.depends('duration')
+    def _get_duration_type(self):
+        for record in self:
+            record.duration_change_type = int(record.duration)
 
     @api.depends('start_date', 'duration')
     def _get_end_date(self):
@@ -97,7 +103,6 @@ class Session(models.Model):
         for r in self:
             if not (r.start_date and r.end_date):
                 continue
-
             # Compute the difference between dates, but: Friday - Monday = 4 days,
             # so add one day to get 5 days instead
             r.duration = (r.end_date - r.start_date).days + 1

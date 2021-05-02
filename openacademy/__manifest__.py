@@ -33,7 +33,8 @@
         'views/session_board.xml',
         'views/courses.xml',
         'views/session.xml',
-
+        'reports/session_report_pdf.xml',
+        'reports/course_report_pdf.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
